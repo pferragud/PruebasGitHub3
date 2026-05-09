@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "107028628259",
+    "project_id": "pmdm08-pruebagithub2",
+    "storage_bucket": "pmdm08-pruebagithub2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107028628259:android:e491a24296e44043e74296",
+        "android_client_info": {
+          "package_name": "com.pmdm.pmdm08_pruegagithub3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAANtr7d0ykCAr4eg9Vk2I2yzZe8dHyv8A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
