@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.pmdm.pmdm08_pruegagithub3"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.pmdm.pmdm08_pruegagithub3"
-        minSdk = 30
-        targetSdk = 34
+        minSdk = 33
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
