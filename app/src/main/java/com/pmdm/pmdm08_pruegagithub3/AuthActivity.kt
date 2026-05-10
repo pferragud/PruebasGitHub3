@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -37,11 +38,9 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityAuthBinding.inflate(layoutInflater)
+
         enableEdgeToEdge()
         setContentView(binding.root)
-
-        // Título de la ventana
-        supportActionBar?.title = "Autenticación"
 
         val analytics = FirebaseAnalytics.getInstance(this)
         val bundle = Bundle()
@@ -55,10 +54,19 @@ class AuthActivity : AppCompatActivity() {
         }
 
         setup()
+        session()
         notification()
         askNotificationPermission()
     }
 
+    private fun session() {
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)
+        val email = prefs.getString("email", null)
+        val provider = prefs.getString("provider", null)
+        if (email != null && provider != null) {
+            showHome(email, ProviderType.valueOf(provider))
+        }
+    }
     private fun setup(){
 
         binding.signInButton.setOnClickListener {

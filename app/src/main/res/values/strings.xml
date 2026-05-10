@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PMDM08_PruegaGitHub3</string>
+    <string name="prefs_file">PMDM08_PruegaGitHub3.PREFERENCE_FILE_KEY</string>
+
 </resources>
