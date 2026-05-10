@@ -13,8 +13,7 @@ enum class ProviderType {
     BASIC
 }
 class HomeActivity : AppCompatActivity() {
-    
-    // 1. Cambiado de ActivityAuthBinding a ActivityHomeBinding
+    // 1. Declarar el binding
     private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +24,8 @@ class HomeActivity : AppCompatActivity() {
 
         enableEdgeToEdge()
         setContentView(binding.root)
-        
+
+        supportActionBar?.title = "Inicio"
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -39,15 +39,13 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setup(email: String, provider: String) {
-        title = "Inicio"
-        
-        // 3. Ahora podrás acceder a los IDs de activity_home.xml
+
         binding.emailTextView.text = email
         binding.providerTextView.text = provider
         
         binding.logOutButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            finish() // Es mejor usar finish() para volver atrás
+            finish()
         }
     }
 }

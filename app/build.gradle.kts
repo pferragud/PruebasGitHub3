@@ -56,4 +56,5 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.firebaseui:firebase-ui-auth:9.0.0")
+    implementation("com.google.firebase:firebase-messaging:25.0.2")
 }

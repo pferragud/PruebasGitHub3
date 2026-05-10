@@ -1,25 +1,47 @@
 package com.pmdm.pmdm08_pruegagithub3
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import com.pmdm.pmdm08_pruegagithub3.databinding.ActivityAuthBinding
 
+
 class AuthActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthBinding
 
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // Permiso concedido
+        } else {
+            // Permiso denegado
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityAuthBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
+
+        // Título de la ventana
+        supportActionBar?.title = "Autenticación"
 
         val analytics = FirebaseAnalytics.getInstance(this)
         val bundle = Bundle()
@@ -33,14 +55,17 @@ class AuthActivity : AppCompatActivity() {
         }
 
         setup()
+        notification()
+        askNotificationPermission()
     }
 
     private fun setup(){
-        title = "Autenticación"
+
         binding.signInButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
-            if (email.isNotEmpty() && email.isNotEmpty()){
+
+            if (email.isNotEmpty() && password.isNotEmpty()){
                 FirebaseAuth.getInstance()
                     .createUserWithEmailAndPassword(email,password)
                     .addOnCompleteListener {
@@ -84,6 +109,39 @@ class AuthActivity : AppCompatActivity() {
             putExtra("provider", provider.name)
         }
         startActivity(homeIntent)
+    }
 
+    private fun notification(){
+        com.google.firebase.messaging.FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                println("No se pudo obtener el token de registro: ${task.exception}")
+                return@addOnCompleteListener
+            }
+            val token = task.result
+            println("Este es el token del dispositivo: $token")
+        }
+    }
+    private fun askNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                // Ya tiene permiso
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                // Mostrar un diálogo explicando por qué es importante
+                AlertDialog.Builder(this)
+                    .setTitle("Permiso necesario")
+                    .setMessage("Necesitamos tu permiso para enviarte notificaciones sobre tu cuenta.")
+                    .setPositiveButton("Aceptar") { _, _ ->
+                        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    }
+                    .setNegativeButton("No, gracias", null)
+                    .show()
+            } else {
+                // Directly ask for the permission
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 }
