@@ -48,7 +48,7 @@
             android:id="@+id/adressEditText"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="Calle, numero, puerta" />
+            android:hint="Población, Calle, numero, puerta" />
 
         <androidx.constraintlayout.widget.Barrier
             android:layout_width="match_parent"
@@ -60,6 +60,17 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:hint="Teléfono" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            app:barrierDirection="left" />
+
+        <TextView
+            android:id="@+id/ubicacionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Geolocalización" />
 
         <androidx.constraintlayout.widget.Barrier
             android:layout_width="match_parent"
@@ -108,6 +119,42 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Cerrar Sesión" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            app:barrierDirection="left" />
+
+        <Button
+            android:id="@+id/locationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Buscar dirección" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            app:barrierDirection="left" />
+
+        <Button
+            android:id="@+id/myLocationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mi ubicación" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            app:barrierDirection="left" />
+
+        <Button
+            android:id="@+id/viewMapButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ver Mapa" />
 
     </LinearLayout>
 
